@@ -101,6 +101,7 @@
   rotationAnimation.duration = 1;
   rotationAnimation.cumulative = YES;
   rotationAnimation.repeatCount = HUGE_VALF;
+  rotationAnimation.removedOnCompletion = NO;
   [_bgLayer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
 }
 
