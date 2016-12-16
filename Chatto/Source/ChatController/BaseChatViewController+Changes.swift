@@ -140,7 +140,7 @@ extension BaseChatViewController: ChatDataSourceDelegateProtocol {
         let animateBatchUpdates: Bool
         do { // Recover from too fast updates...
             let visibleCellsAreValid = self.visibleCellsAreValid(changes: changes)
-            let wantsReloadData = ![UpdateType.normal, UpdateType.pagination].contains(updateType)
+            let wantsReloadData = ![UpdateType.normal, UpdateType.pagination, UpdateType.firstLoad].contains(updateType)
             let hasUnfinishedBatchUpdates = self.unfinishedBatchUpdatesCount > 0 // This can only happen when enabling self.updatesConfig.fastUpdates
 
             // a) It's unsafe to perform reloadData while there's a performBatchUpdates animating: https://github.com/diegosanchezr/UICollectionViewStressing/tree/master/GhostCells
@@ -159,7 +159,7 @@ extension BaseChatViewController: ChatDataSourceDelegateProtocol {
             // ... if they are still invalid the only thing we can do is a reloadData
             let mustDoReloadData = !visibleCellsAreValid // Only way to recover from this inconsistent state
             usesBatchUpdates = !wantsReloadData && !mustDoReloadData
-            animateBatchUpdates = updateType != .pagination
+            animateBatchUpdates = ![UpdateType.pagination, UpdateType.firstLoad].contains(updateType)
         }
 
         let scrollAction: ScrollAction
